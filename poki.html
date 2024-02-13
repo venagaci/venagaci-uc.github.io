@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Example</title>
+</head>
+<body>
+  <script>
+    // Function to set a cookie
+    function setCookie(name, value, days) {
+      const expires = new Date();
+      expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+      document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+    }
+
+    // Function to get the value of a cookie by name
+    function getCookie(name) {
+      const keyValue = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
+      return keyValue ? keyValue[2] : null;
+    }
+
+    // Function to display a welcome message based on cookie
+    function displayWelcomeMessage() {
+      const lastVisit = getCookie('lastVisit');
+
+      if (!lastVisit) {
+        // First-time visit
+        const currentDate = new Date().toLocaleString();
+        alert('Welcome to my homepage!');
+        setCookie('lastVisit', currentDate, 365); // Set cookie to expire in 365 days
+      } else {
+        // Returning visit
+        alert(`Welcome back! Your last visit was ${lastVisit}`);
+      }
+    }
+
+    // Call the function on page load
+    window.onload = displayWelcomeMessage;
+  </script>
+</body>
+</html>
